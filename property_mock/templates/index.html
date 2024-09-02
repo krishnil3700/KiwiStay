@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Dream Property | Kiwi Stay</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Discover Your Dream Home in New Zealand with Kiwi Stay</h1>
+            <p>Find the perfect place to stay for your next trip. From cozy cottages to modern apartments, we have it all.</p>
+        </div>
+    </header>
+    <div class="search-container">
+        <form action="{{ url_for('search_listings') }}" method="POST" class="search-form">
+            <input type="text" name="location" placeholder="Enter location (e.g., Auckland, Wellington)">
+            <input type="number" name="min_price" placeholder="Min price ($)">
+            <input type="number" name="max_price" placeholder="Max price ($)">
+            <input type="number" name="bedrooms" placeholder="Bedrooms (e.g., 2)">
+            <select name="parking">
+                <option value="">Parking</option>
+                <option value="True">Yes</option>
+                <option value="False">No</option>
+            </select>
+            <button type="submit" class="futuristic-button">Search Properties</button>
+        </form>
+        
+    </div>
+
+    <!-- Top Rated Homes Section -->
+    <div class="top-rated-homes">
+        <h2>Top Rated Homes This Week</h2>
+        <div class="top-homes">
+            {% for listing in listings %}
+            <a href="{{ url_for('view_listing', listing_id=listing.id) }}" class="home">
+                <img src="{{ url_for('static', filename=listing.image) }}" alt="{{ listing.title }}">
+                <h3>{{ listing.title }}</h3>
+                <p>{{ listing.location }}</p>
+                <p class="price">${{ listing.price }}/night</p>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    
+
+    <div class="testimonial-slider">
+        <div class="slide active">"Kiwi Stay made our vacation planning so easy and fun!"</div>
+        <div class="slide">"Best rental experience in New Zealand!"</div>
+        <div class="slide">"Affordable and comfortable, highly recommended!"</div>
+    </div>
+    <script src="{{ url_for('static', filename='scripts.js') }}"></script>
+</body>
+</html>

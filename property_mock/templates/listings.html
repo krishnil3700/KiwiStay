@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Listings | Kiwi Stay</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container centered">
+        <h1>Available Listings</h1>
+        
+        <!-- Return to Home Button -->
+        <form action="{{ url_for('index') }}" method="GET">
+            <button type="submit" class="futuristic-button">Return to Home</button>
+        </form>
+
+        <div class="listings-grid">
+            {% if listings %}
+                {% for listing in listings %}
+                    <div class="listing-item">
+                        <img src="{{ url_for('static', filename=listing.image) }}" alt="{{ listing.title }}">
+                        <h3>{{ listing.title }}</h3>
+                        <p>{{ listing.location }}</p>
+                        <p class="price">${{ listing.price }}/night</p>
+                        <form action="{{ url_for('view_listing', listing_id=listing.id) }}" method="GET">
+                            <button type="submit" class="futuristic-button">View Details</button>
+                        </form>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No listings available based on your search criteria.</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
